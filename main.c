@@ -1,7 +1,27 @@
+/*
+===================
+Example usage of linked_list.h
+
+Another usage: Just copy the header (e.g. linked_list.h) to your own project.
+===================
+*/
+
+#define _LL_EXAMPLE
 #include "main.h"
 #include "linked_list.h"
 
-int main(int argc, char **argv)
+void printHelp()
+{
+    printf(
+        "This is an example of Linked List in C\n\n"
+        "Another usage: Just copy the header (e.g. linked_list.h) to your own project.\n"
+        "Arguments:\n\t"
+        "1\tFirst example\n\t"
+        "2\tSecond example\n"
+    );
+}
+
+void example1()
 {
     linked_list *my_list = ll_init();
     ll_addData(my_list, (int*) 5);
@@ -21,7 +41,7 @@ int main(int argc, char **argv)
     linked_list *my_child = ll_getChild(my_list);
     ll_addData(my_child, (int*) 10);
 
-    ll_eraseChild(my_list);
+    // ll_eraseChild(my_list);
 
     if (ll_hasNext(my_list) == TRUE)
     {
@@ -39,6 +59,102 @@ int main(int argc, char **argv)
         printf("No child exists\n");
 
     free(my_list);
+}
+
+void example2()
+{
+    linked_list *list = ll_init();
+    linked_list *nextList = NULL;
+
+    int isRunning = TRUE;
+    while (isRunning == TRUE)
+    {
+        clearScreen();
+
+        printf("Linked List example in C\n\n");
+        printf(
+            "|\tIndex\t|\tData\t|\tHas next?\t|\n"
+            "======================================================================================\n"
+        );
+
+        nextList = list;
+
+        while (nextList != NULL)
+        {
+            int data = 0;
+            if (ll_getData(nextList) != NULL)
+                data = *(int *)ll_getData(nextList);
+
+            printf(
+                "|\t%d\t|\t%d\t|\t%d\t|\n",
+                ll_getIndex(nextList),
+                data,
+                ll_hasNext(nextList)
+            );
+
+            if (ll_hasNext(nextList) == TRUE)
+                nextList = ll_getChild(nextList);
+            else break;
+        }
+
+        int *input = (int *) malloc(sizeof(int));
+        printf(
+            "Commands:\n"
+            "0 - Exit\n"
+            "1 - Add data\n"
+            "2 - Add child\n"
+            "3 - Erase all child\n"
+            "4 - Erase last child\n"
+            "Input: "
+        );
+
+        scanf("%d", input);
+
+        switch (*input)
+        {
+        case 0: isRunning = FALSE; break;
+        case 1:
+            printf("Input: ");
+            scanf("%d", input);
+
+            ll_addData(nextList, input);
+            break;
+        case 2:
+            ll_addChild(list);
+            break;
+        case 3:
+            ll_eraseChild(list);
+            break;
+        case 4:
+            ll_eraseLastChild(list);
+            break;
+        }
+
+    }
+
+    free(nextList);
+    free(list);
+}
+
+int main(int argc, char **argv)
+{
+    if (argc <= 1)
+    {
+        printHelp();
+        return 1;   
+    }
+
+    char arg = **(argv + 1);
+
+    switch (arg)
+    {
+    case 49:    // 1
+        example1();
+        break;
+    case 50:    // 2
+        example2();
+        break;
+    }
     
     return 0;
 }
