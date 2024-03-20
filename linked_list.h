@@ -3,12 +3,19 @@
 Basic linked list using C
 
 Made by ReynDev
+
+Note:
+This header file comes with no guarantee.
+You may modify, distribute, or share however you like.
 ===================
 */
 
-#if defined(_LL_EXAMPLE)
-    #include "main.h"       
-#endif  // defined(_LL_EXAMPLE)
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
+
+#define TRUE    1
+#define FALSE   0
 
 /*
 The struct to create a linked list. 
@@ -188,10 +195,13 @@ int ll_eraseLastChild(linked_list *list)
 This function will find a linked_list based on the matched index
 
 @params
-@param list*    The starting list to traverse from.
-@param index    The index to find the matching linked_list.
+    @param list*    The starting list to traverse from.
+    @param index    The index to find the matching linked_list.
+
+@return
+    Returns the matching linked_list or NULL if no matching index is found.
 */
-linked_list ll_find(linked_list *list, int index)
+linked_list * ll_find(linked_list *list, int index)
 {
     linked_list *currList = list;
 
@@ -202,8 +212,12 @@ linked_list ll_find(linked_list *list, int index)
 
         if (currList->next != NULL)
             currList = currList->next;
-        else break;
+        else 
+        {
+            currList = NULL;
+            break;
+        }
     }
 
-    return *currList;
+    return currList;
 }

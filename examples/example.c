@@ -6,9 +6,14 @@ Another usage: Just copy the header (e.g. linked_list.h) to your own project.
 ===================
 */
 
-#define _LL_EXAMPLE
-#include "main.h"
-#include "linked_list.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
+
+#define TRUE    1
+#define FALSE   0
+
+#include "../linked_list.h"
 
 void printHelp()
 {
@@ -69,8 +74,6 @@ void example2()
     int isRunning = TRUE;
     while (isRunning == TRUE)
     {
-        clearScreen();
-
         printf("Linked List example in C\n\n");
         printf(
             "|\tIndex\t|\tData\t|\tHas next?\t|\n"
@@ -133,18 +136,32 @@ void example2()
             printf("Insert index: ");
             scanf("%d", input);
 
-            linked_list foundList = ll_find(list, *input);
+            linked_list *foundList = ll_find(list, *(int *)input);
+            if (foundList != NULL)
+            {
+                int data = 0;
 
-            printf(
-                "\n|\tIndex\t|\tData\t|\tHas next?\t|\n"
-                "=====================================================\n"
-                "|\t%d\t|\t%d\t|\t%d\t|\n",
-                ll_getIndex(&foundList),
-                *(int *)ll_getData(&foundList),
-                ll_hasNext(&foundList)
-            );
+                if (ll_getData(foundList) != NULL)
+                    data = *(int *)ll_getData(foundList);
+
+                printf(
+                    "\n|\tIndex\t|\tData\t|\tHas next?\t|\n"
+                    "=====================================================\n"
+                    "|\t%d\t|\t%d\t|\t%d\t|\n",
+                    ll_getIndex(foundList),
+                    data,
+                    ll_hasNext(foundList)
+                );
+
+                foundList = NULL;
+            }
+            else
+                printf("List not found.\n");
+            
             break;
         }
+
+        input = NULL;
     }
 
     free(nextList);
