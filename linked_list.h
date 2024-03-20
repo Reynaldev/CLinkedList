@@ -54,7 +54,7 @@ void ll_addData(linked_list *list, void *data)
 Add a new child to current Linked_List.
 
 @param 
-    linked_list* The Linked_List to add the child to.
+    list*   The Linked_List to add the child to.
 */
 void ll_addChild(linked_list *list)
 {
@@ -80,7 +80,7 @@ void ll_addChild(linked_list *list)
 Get the next child of the current Linked_List.
 
 @param
-    linked_list*    The current linked_list to get the child from.
+    list*   The current linked_list to get the child from.
 
 @return
     The child from the current Linked_List* or NULL. 
@@ -109,7 +109,7 @@ void * ll_getData(linked_list *list)
 Returns the current index of this Linked_List.
 
 @param 
-    linked_list* The current Linked_List to return the index from
+    list*   The current Linked_List to return the index from
 
 @return 
     The index of the current linked_list
@@ -123,7 +123,7 @@ int ll_getIndex(linked_list *list)
 Returns true if the Linked_List has next child.
 
 @param 
-    linked_list* The current Linked_List.
+    list*   The current Linked_List.
 
 @return
     Boolean indicates whether child exist or not.
@@ -141,7 +141,7 @@ Deallocate the child of the current Linked_List.
 This function also set the child to NULL.
 
 @param 
-    linked_list* The current linked_list*
+    list*   The current linked_list*
 
 @return
     Boolean indicates whether operations success or not.
@@ -184,13 +184,21 @@ int ll_eraseLastChild(linked_list *list)
         return FALSE;
 }
 
+/*
+This function will find a linked_list based on the matched index
+
+@params
+@param list*    The starting list to traverse from.
+@param index    The index to find the matching linked_list.
+*/
 linked_list ll_find(linked_list *list, int index)
 {
     linked_list *currList = list;
 
     while (currList != NULL)
     {
-        printf("%d\n", index);
+        if (currList->index == index)
+            break;
 
         if (currList->next != NULL)
             currList = currList->next;
