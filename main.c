@@ -74,7 +74,7 @@ void example2()
         printf("Linked List example in C\n\n");
         printf(
             "|\tIndex\t|\tData\t|\tHas next?\t|\n"
-            "======================================================================================\n"
+            "=====================================================\n"
         );
 
         nextList = list;
@@ -105,6 +105,7 @@ void example2()
             "2 - Add child\n"
             "3 - Erase all child\n"
             "4 - Erase last child\n"
+            "5 - Find\n"
             "Input: "
         );
 
@@ -114,7 +115,7 @@ void example2()
         {
         case 0: isRunning = FALSE; break;
         case 1:
-            printf("Input: ");
+            printf("Input data: ");
             scanf("%d", input);
 
             ll_addData(nextList, input);
@@ -128,8 +129,22 @@ void example2()
         case 4:
             ll_eraseLastChild(list);
             break;
-        }
+        case 5:
+            printf("Insert index: ");
+            scanf("%d", input);
 
+            linked_list foundList = ll_find(list, *input);
+
+            printf(
+                "\n|\tIndex\t|\tData\t|\tHas next?\t|\n"
+                "=====================================================\n"
+                "|\t%d\t|\t%d\t|\t%d\t|\n",
+                ll_getIndex(&foundList),
+                *(int *)ll_getData(&foundList),
+                ll_hasNext(&foundList)
+            );
+            break;
+        }
     }
 
     free(nextList);
